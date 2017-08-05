@@ -1,4 +1,4 @@
-package com.puspcan.authentication
+package com.pupscan.authentication
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -85,6 +85,10 @@ internal class OAuthConfiguration(private val authenticationManager: Authenticat
 internal class AccountUserDetailsService : UserDetailsService {
 
     @Throws(UsernameNotFoundException::class)
-    override fun loadUserByUsername(username: String) =
-            User(username, username, AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER"))
+    override fun loadUserByUsername(username: String): User {
+        if (username.contains("@pupscan.com")) {
+            return User(username, "pupscan", AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER"))
+        }
+        throw UsernameNotFoundException("Not found")
+    }
 }
