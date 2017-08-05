@@ -1,4 +1,4 @@
-package com.puspcan.authentication
+package com.pupscan.authentication
 
 import org.junit.Test
 import org.junit.runner.RunWith
